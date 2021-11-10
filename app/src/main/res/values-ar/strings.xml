@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Eyjar-إيجار</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    //signIn
+    <string name="dontHaveAnAcc">ليس لديك حساب؟ </string>
+    <string name="phoneNumber">رقم الجوال</string>
+    <string name="password">كلمة المرور</string>
+    <string name="signIn">تسجيل الدخول</string>
+    <string name="signUp">انشاء حساب</string>
+    <string name="languageBtn">اللغة</string>
+    <string name="invalidPhoneOrPassword">رقم الجوال او كلمة المرور غير صحيحة</string>
+    <string name="invalidPassword">كلمة المرور غير صحيحة</string>
+    <string name="invalidPhoneNumber">رقم الجوال غير صحيح</string>
+    <string name="noInternetConnection">لا يوجد اتصال بالانترنت </string>
+
+
+    //signUp
+    <string name="name">الاسم</string>
+    <string name="email">البريد الالكترونى</string>
+    <string name="gender">الجنس</string>
+    <string name="male">ذكر</string>
+    <string name="female">انثى</string>
+    <string name="loading">تحميل…</string>
+    <string name="invalidEmail">البريد الالكترونى غير صحيح</string>
+    <string name="invalidName">الاسم الاول غير صحيح</string>
+
+</resources>
