@@ -8,13 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import alphagroup.eyjar.com.R
 import alphagroup.eyjar.com.utlis.StoreLanguageData
+import alphagroup.eyjar.com.utlis.TestLogin
 import alphagroup.eyjar.com.utlis.showSnackBar
 import alphagroup.eyjar.com.viewModel.SignInViewModel
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.graphics.Paint
 import android.graphics.PorterDuff
+import android.os.Build
 import android.widget.ProgressBar
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -24,10 +27,8 @@ class SignInFragment : Fragment(), View.OnClickListener {
     private lateinit var storeLanguageData: StoreLanguageData
     private lateinit var language: String
     private lateinit var progressDialog: ProgressDialog
+    private lateinit var testLogin: TestLogin
 
-    companion object {
-        fun newInstance() = SignInFragment()
-    }
 
     private lateinit var viewModel: SignInViewModel
 
@@ -38,17 +39,19 @@ class SignInFragment : Fragment(), View.OnClickListener {
         return inflater.inflate(R.layout.sign_in_fragment, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         init()
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun init() {
         viewModel = ViewModelProvider(this)[SignInViewModel::class.java]
         storeLanguageData = StoreLanguageData(requireActivity())
         language = storeLanguageData.getAppLanguage().toString()
-
+        testLogin = TestLogin(requireContext())
         progressDialog = ProgressDialog(requireActivity())
         progressDialog.setMessage(this.resources.getString(R.string.loading))
         progressDialog.setCancelable(false)
@@ -78,8 +81,11 @@ class SignInFragment : Fragment(), View.OnClickListener {
         }
     }
 
+
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun listenOnMLD() {
         viewModel.resultMLD.observe(requireActivity(), { result ->
+            disableErrors()
             when (result) {
                 "invalid phoneNumber" -> {
                     phoneNumberLin.isErrorEnabled = true
@@ -90,35 +96,44 @@ class SignInFragment : Fragment(), View.OnClickListener {
                     passwordLin.isErrorEnabled = true
                     passwordLin.error = resources.getString(R.string.invalidPassword)
                     Snackbar.make(
-                                            mainLin,
-                                            resources.getString(R.string.invalidPassword),
-                                            Snackbar.LENGTH_LONG
-                                        ).show()
+                        mainLin,
+                        resources.getString(R.string.invalidPassword),
+                        Snackbar.LENGTH_LONG
+                    ).show()
                 }
                 "invalid phoneOrPass" -> {
-                    this.showSnackBar(mainLin,R.string.invalidPhoneOrPassword)
+                    this.showSnackBar(mainLin, R.string.invalidPhoneOrPassword)
                 }
 
                 "valid data" -> {
-                    phoneNumberLin.isErrorEnabled = false
-                    passwordLin.isErrorEnabled = false
 
+                    disableErrors()
                     viewModel.checkNetwork(requireActivity())
                 }
                 "noInternetConnection" -> {
-                    this.showSnackBar(mainLin,R.string.noInternetConnection)
+                    this.showSnackBar(mainLin, R.string.noInternetConnection)
 
                 }
                 "isInternetPresent" -> {
-                    //    viewModel.sendRequest()
+                    viewModel.sendRequest()
                 }
                 "validRequest" -> {
+                    testLogin.setAuth(true)
+                    findNavController().navigate(
+                        R.id.action_signInFragment_to_homeFragment
+                    )
+
                 }
 
             }
         })
 
 
+    }
+
+    private fun disableErrors() {
+        phoneNumberLin.isErrorEnabled = false
+        passwordLin.isErrorEnabled = false
     }
 
 

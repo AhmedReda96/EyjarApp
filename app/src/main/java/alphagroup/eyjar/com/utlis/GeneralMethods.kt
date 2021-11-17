@@ -5,9 +5,11 @@ import android.content.Context
 import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import java.util.*
 
@@ -35,6 +37,7 @@ fun Activity.changeLanguage(relativeLayout: RelativeLayout) {
 
 }
 
+@RequiresApi(Build.VERSION_CODES.M)
 fun Activity.checkNetwork(): Boolean {
     val connectivityManager =
         this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -70,10 +73,10 @@ fun Activity.checkNetwork(): Boolean {
 
 fun Fragment.showSnackBar(view:RelativeLayout, message: Int){
 
-    val snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-    val sbView = snackbar.view
+    val snack = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+    val sbView = snack.view
     sbView.setBackgroundColor(ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark));
-    snackbar.show()
+    snack.show()
 
 
 }

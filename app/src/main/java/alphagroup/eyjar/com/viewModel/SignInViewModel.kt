@@ -1,7 +1,9 @@
 package alphagroup.eyjar.com.viewModel
 
 import alphagroup.eyjar.com.utlis.checkNetwork
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +13,7 @@ class SignInViewModel : ViewModel() {
     var resultMLD = MutableLiveData<String>()
 
     fun checkData(phoneNumber: String, password: String) {
-        if (phoneNumber.isEmpty() || phoneNumber.length < 11) {
+        if (phoneNumber.isEmpty() || phoneNumber.length < 10) {
             resultMLD.value = "invalid phoneNumber"
             Log.d(
                 TAG,
@@ -37,6 +39,7 @@ class SignInViewModel : ViewModel() {
         }
 
     }
+    @RequiresApi(Build.VERSION_CODES.M)
     fun checkNetwork(context: FragmentActivity) {
         if (!context.checkNetwork()) {
             resultMLD.value = "noInternetConnection"
@@ -52,5 +55,15 @@ class SignInViewModel : ViewModel() {
                 "testTag checkNetwork:  isInternetPresent"
             )
         }
+    }
+
+    fun sendRequest() {
+
+
+        resultMLD.value = "validRequest"
+        Log.d(
+            TAG,
+            "testTag sendRequest:  validRequest"
+        )
     }
 }

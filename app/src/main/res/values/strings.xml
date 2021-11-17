@@ -23,7 +23,26 @@
     <string name="male">male</string>
     <string name="female">female</string>
     <string name="loading">loading…</string>
-    <string name="invalidEmail">البريد الالكترونى غير صحيح</string>
-    <string name="invalidName">الاسم الاول غير صحيح</string>
+    <string name="invalidEmail">Invalid email</string>
+    <string name="invalidName">Invalid name</string>
+    <string name="searchBar">name or model of car</string>
+
+
+    <!-- Setting Screen -->
+    <string name="accountSetting">Account Setting</string>
+    <string name="changePassword">Change Password</string>
+    <string name="changeLanguage">Change Language</string>
+    <string name="logout">Logout</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="setting">Settings</string>
+    <string name="search">Search</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
+    <string name="save">Save</string>
+    <string name="oldPassword">Old password</string>
+    <string name="newPassword">New password</string>
+    <string name="invalidOldPhoneNumber">Invalid old password</string>
+    <string name="invalidNewPhoneNumber">Invalid new password</string>
 
 </resources>

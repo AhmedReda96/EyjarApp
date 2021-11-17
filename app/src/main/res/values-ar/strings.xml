@@ -24,6 +24,25 @@
     <string name="female">انثى</string>
     <string name="loading">تحميل…</string>
     <string name="invalidEmail">البريد الالكترونى غير صحيح</string>
-    <string name="invalidName">الاسم الاول غير صحيح</string>
+    <string name="invalidName">الاسم غير صحيح</string>
+    <string name="searchBar">اسم او موديل السيارة</string>
+
+
+    <!-- Setting Screen -->
+    <string name="accountSetting">اعدادات الحساب</string>
+    <string name="changePassword">تغيير كلمة المرور</string>
+    <string name="changeLanguage">تغيير اللغة</string>
+    <string name="logout">الخروج</string>
+    <string name="home">الرئيسية</string>
+    <string name="profile">الصفحة الشخصية</string>
+    <string name="setting">الاعدادات</string>
+    <string name="search">البحث</string>
+    <string name="english">الانجليزية</string>
+    <string name="arabic">العربية</string>
+    <string name="save">حفظ</string>
+    <string name="oldPassword">كلمة المرور القديمة</string>
+    <string name="newPassword">كلمة المرور الجديدة</string>
+    <string name="invalidOldPhoneNumber">كلمة المرور القديمة غير صحيحة</string>
+    <string name="invalidNewPhoneNumber">كلمة المرور الجديدة غير صحيحة</string>
 
 </resources>

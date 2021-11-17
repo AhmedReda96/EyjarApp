@@ -4,32 +4,38 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class TestLogin(private val context: Context) {
-    private var auth: String? = null
+    private var auth: Boolean = false
     private var token: String? = null
-        get() {
-            field = sharedPreferences.getString("Token", field)
-            return field
-        }
-        set(token) {
-            field = token
-            sharedPreferences.edit().putString("Token", token).commit()
-        }
-    private val sharedPreferences: SharedPreferences =
-        context.getSharedPreferences("TestLogin", Context.MODE_PRIVATE)
+    private var sharedPreferences: SharedPreferences? = null
 
-    fun remove() {
-        loginType = null
-        token = null
+
+    init {
+        sharedPreferences = context.getSharedPreferences("TestLogin", Context.MODE_PRIVATE)
     }
 
-    private var loginType: String?
-        get() {
-            auth = sharedPreferences.getString("Auth", auth)
-            return auth
-        }
-        set(auth) {
-            this.auth = auth
-            sharedPreferences.edit().putString("Auth", auth).commit()
-        }
 
+    fun remove() {
+        setAuth(false)
+        setToken(null)
+    }
+
+    fun getAuth(): Boolean {
+        auth = sharedPreferences!!.getBoolean("auth", auth)
+        return auth
+    }
+
+    fun setAuth(auth: Boolean) {
+        this.auth = auth
+        sharedPreferences!!.edit().putBoolean("auth", auth).apply()
+    }
+
+    fun getToken(): String? {
+        token = sharedPreferences!!.getString("token", token)
+        return token
+    }
+
+    fun setToken(id: String?) {
+        this.token = id
+        sharedPreferences!!.edit().putString("token", token).apply()
+    }
 }
