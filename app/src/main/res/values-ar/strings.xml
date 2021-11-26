@@ -44,5 +44,27 @@
     <string name="newPassword">كلمة المرور الجديدة</string>
     <string name="invalidOldPhoneNumber">كلمة المرور القديمة غير صحيحة</string>
     <string name="invalidNewPhoneNumber">كلمة المرور الجديدة غير صحيحة</string>
+    <string name="invalidPhoneOrEmail">رقم الجوال او البريد الالكترونى مسجل مسبقاً</string>
+    <string name="erorrIntoGetData">خطأ في جلب البيانات و الرجاء المحاولة مرة اخرى</string>
+    <string name="retry">محاولة مرة اخرى</string>
+    <string name="brand">النوع</string>
+    <string name="title">الاسم</string>
+    <string name="model">موديل</string>
+    <string name="gearType">نوع الناقل</string>
+    <string name="year">السنة</string>
+    <string name="payWay">طريقة الدفع</string>
+    <string name="enginePower">قوة المحرك</string>
+    <string name="fuelType">نوع الوقود </string>
+    <string name="licencePlate">لوحة الترخيص </string>
+    <string name="color">اللون</string>
+    <string name="ownerName">اسم المالك</string>
+    <string name="address">العنوان</string>
+    <string name="connectVia">الاتصال عن طريق</string>
+    <string name="cash">كاش</string>
+    <string name="price">السعر</string>
+    <string name="no_whatsapp">"Whatsapp Not founded "</string>
+    <string name="noData">لا توجد بيانات</string>
+    <string name="errorChangePassword">خطأ في تغيير كلمة المرور</string>
+    <string name="errorEditProfileData">خطأ في تعديل البيانات</string>
 
 </resources>

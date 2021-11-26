@@ -1,14 +1,13 @@
 package alphagroup.eyjar.com.ui.home.setting.editProfileInfo
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import alphagroup.eyjar.com.R
-import alphagroup.eyjar.com.utlis.ProfileInfo
-import alphagroup.eyjar.com.utlis.showSnackBar
+import alphagroup.eyjar.com.commons.ProfileInfoSP
+import alphagroup.eyjar.com.commons.showSnackBar
 import alphagroup.eyjar.com.viewModel.EditProfileInfoViewModel
 import android.app.ProgressDialog
 import android.graphics.PorterDuff
@@ -18,18 +17,21 @@ import android.widget.RadioGroup
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.activity_main.*
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.mainLin
 import kotlinx.android.synthetic.main.edit_profile_info_fragment.*
+import kotlinx.android.synthetic.main.edit_profile_info_fragment.saveBtn
+import kotlinx.android.synthetic.main.edit_profile_info_fragment.toolbar
 import kotlinx.android.synthetic.main.edit_profile_info_fragment.view.*
 import kotlinx.android.synthetic.main.main_toolbar.view.*
 
+@AndroidEntryPoint
 class EditProfileInfoFragment : Fragment(), View.OnClickListener {
     private lateinit var progressDialog: ProgressDialog
-    private lateinit var profileInfo: ProfileInfo
-    private var nameTxt: String? = null
-    private var emailTxt: String? = null
-    private var genderTxt: String? = null
+    private lateinit var profileInfoSP: ProfileInfoSP
+    private lateinit var nameTxt: String
+    private lateinit var emailTxt: String
+    private lateinit var genderTxt: String
     private val viewModel: EditProfileInfoViewModel by viewModels()
 
     override fun onCreateView(
@@ -50,7 +52,7 @@ class EditProfileInfoFragment : Fragment(), View.OnClickListener {
     private fun init() {
         toolbar.title.text = requireActivity().resources.getString(R.string.accountSetting)
         toolbar.backBtn.visibility = View.VISIBLE
-        profileInfo = ProfileInfo(requireContext())
+        profileInfoSP = ProfileInfoSP(requireContext())
 
         progressDialog = ProgressDialog(requireActivity())
         progressDialog.setMessage(this.resources.getString(R.string.loading))
@@ -89,7 +91,6 @@ class EditProfileInfoFragment : Fragment(), View.OnClickListener {
                 "invalid name" -> {
                     nameLin.isErrorEnabled = true
                     nameLin.error = resources.getString(R.string.invalidName)
-
                 }
 
                 "invalid email" -> {
@@ -106,11 +107,17 @@ class EditProfileInfoFragment : Fragment(), View.OnClickListener {
 
                 }
                 "isInternetPresent" -> {
-                    viewModel.sendRequest()
+                    progressDialog.show()
+                    viewModel.sendRequest(nameTxt, emailTxt, genderTxt)
                 }
                 "validRequest" -> {
+                    progressDialog.dismiss()
 
                     requireActivity().onBackPressed()
+                }
+                "invalidRequest" -> {
+                    progressDialog.dismiss()
+                    this.showSnackBar(mainLin, R.string.errorEditProfileData)
                 }
 
             }
@@ -126,9 +133,9 @@ class EditProfileInfoFragment : Fragment(), View.OnClickListener {
     }
 
     private fun getData() {
-        nameTxt = profileInfo.getName()
-        emailTxt = profileInfo.getEmail()
-        genderTxt = profileInfo.getGender()
+        nameTxt = profileInfoSP.getName().toString()
+        emailTxt = profileInfoSP.getEmail().toString()
+        genderTxt = profileInfoSP.getGender().toString()
         name.setText(nameTxt.toString())
         email.setText(emailTxt.toString())
         if (genderTxt == "male") {
@@ -145,7 +152,9 @@ class EditProfileInfoFragment : Fragment(), View.OnClickListener {
             requireActivity().onBackPressed()
         }
         if (saveBtn == view) {
-            viewModel.checkData(name.text?.trim().toString(), email.text?.trim().toString())
+            nameTxt = name.text?.trim().toString()
+            emailTxt = email.text?.trim().toString()
+            viewModel.checkData(nameTxt, emailTxt)
         }
     }
 }

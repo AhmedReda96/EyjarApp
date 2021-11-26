@@ -7,8 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import alphagroup.eyjar.com.R
 import alphagroup.eyjar.com.ui.main.MainActivity
-import alphagroup.eyjar.com.utlis.TestLogin
-import alphagroup.eyjar.com.utlis.changeLanguage
+import alphagroup.eyjar.com.commons.TestLogin
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.*
 
@@ -23,6 +22,20 @@ class SplashFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.splash_fragment, container, false)
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+
         testLogin = TestLogin(requireContext())
         coroutineScope.launch {
             (activity as MainActivity?)?.changeAppLanguage()
@@ -39,13 +52,5 @@ class SplashFragment : Fragment() {
                 )
             }
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.splash_fragment, container, false)
-
     }
 }

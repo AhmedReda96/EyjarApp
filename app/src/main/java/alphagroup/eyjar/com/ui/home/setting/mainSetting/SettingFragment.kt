@@ -6,15 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import alphagroup.eyjar.com.R
-import alphagroup.eyjar.com.utlis.ProfileInfo
-import alphagroup.eyjar.com.utlis.TestLogin
+import alphagroup.eyjar.com.commons.ProfileInfoSP
+import alphagroup.eyjar.com.commons.TestLogin
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.main_toolbar.view.*
 import kotlinx.android.synthetic.main.setting_fragment.*
 
 class SettingFragment : Fragment(), View.OnClickListener {
     private lateinit var testLogin: TestLogin
-    private lateinit var profileInfo: ProfileInfo
+    private lateinit var profileInfoSP: ProfileInfoSP
 
     companion object {
         fun newInstance() = SettingFragment()
@@ -35,7 +35,7 @@ class SettingFragment : Fragment(), View.OnClickListener {
 
     private fun init() {
         testLogin = TestLogin(requireContext())
-        profileInfo = ProfileInfo(requireContext())
+        profileInfoSP = ProfileInfoSP(requireContext())
 
         toolbar.title.text = resources.getString(R.string.setting)
 
@@ -64,7 +64,7 @@ class SettingFragment : Fragment(), View.OnClickListener {
         }
         if (logoutLin == view) {
             testLogin.remove()
-            profileInfo.remove()
+            profileInfoSP.remove()
             findNavController().navigate(
                 R.id.action_settingFragment_to_signInFragment
             )

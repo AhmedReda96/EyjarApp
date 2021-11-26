@@ -1,28 +1,36 @@
 package alphagroup.eyjar.com.ui.login.signUp
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import alphagroup.eyjar.com.R
-import alphagroup.eyjar.com.utlis.TestLogin
-import alphagroup.eyjar.com.utlis.showSnackBar
+import alphagroup.eyjar.com.commons.TestLogin
+import alphagroup.eyjar.com.commons.showSnackBar
 import alphagroup.eyjar.com.viewModel.SignUpViewModel
+import android.app.ProgressDialog
+import android.graphics.PorterDuff
 import android.os.Build
+import android.widget.ProgressBar
 import kotlinx.android.synthetic.main.sign_up_fragment.*
 import android.widget.RadioGroup
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.mainLin
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class SignUpFragment : Fragment(), View.OnClickListener {
     private var gender: String = "male"
+    private lateinit var nameTxt: String
+    private lateinit var emailTxt: String
+    private lateinit var phoneTxt: String
+    private lateinit var passwordTxt: String
     private lateinit var testLogin: TestLogin
-    private lateinit var viewModel: SignUpViewModel
+    private val viewModel: SignUpViewModel by viewModels()
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,13 +44,20 @@ class SignUpFragment : Fragment(), View.OnClickListener {
         super.onActivityCreated(savedInstanceState)
         init()
 
-
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun init() {
-        viewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
         testLogin = TestLogin(requireContext())
+        progressDialog = ProgressDialog(requireActivity())
+        progressDialog.setMessage(this.resources.getString(R.string.loading))
+        progressDialog.setCancelable(false)
+        val drawable = ProgressBar(requireActivity()).indeterminateDrawable.mutate()
+        drawable.setColorFilter(
+            ContextCompat.getColor(requireActivity(), R.color.black),
+            PorterDuff.Mode.SRC_IN
+        )
+        progressDialog.setIndeterminateDrawable(drawable)
 
         signUpBtn.setOnClickListener(this)
 
@@ -61,9 +76,10 @@ class SignUpFragment : Fragment(), View.OnClickListener {
         listenOnMLD()
 
     }
+
     @RequiresApi(Build.VERSION_CODES.M)
     private fun listenOnMLD() {
-        viewModel.resultMLD.observe(requireActivity(),{
+        viewModel.resultMLD.observe(requireActivity(), {
             disableErrors()
             when (it) {
                 "invalid name" -> {
@@ -86,29 +102,30 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                     passwordLin.error = resources.getString(R.string.invalidPassword)
 
                 }
-                "invalid phoneOrPass" -> {
-                    this.showSnackBar(mainLin,R.string.invalidPhoneOrPassword)
-                }
 
                 "valid data" -> {
-                   disableErrors()
+                    disableErrors()
                     viewModel.checkNetwork(requireActivity())
                 }
                 "noInternetConnection" -> {
-                    this.showSnackBar(mainLin,R.string.noInternetConnection)
+                    this.showSnackBar(mainLin, R.string.noInternetConnection)
 
                 }
                 "isInternetPresent" -> {
-                        viewModel.sendRequest()
+                    progressDialog.show()
+                    viewModel.sendRequest(nameTxt,phoneTxt,emailTxt,passwordTxt,gender)
                 }
                 "validRequest" -> {
-                    testLogin.setAuth(true)
+                    progressDialog.dismiss()
                     findNavController().navigate(
                         R.id.action_signUpFragment_to_homeFragment
                     )
 
                 }
-
+                "invalidRequest" -> {
+                    progressDialog.dismiss()
+                   this.showSnackBar(mainLin, R.string.invalidPhoneOrEmail)
+                }
             }
 
         })
@@ -122,13 +139,18 @@ class SignUpFragment : Fragment(), View.OnClickListener {
         emailLin.isErrorEnabled = false
         nameLin.isErrorEnabled = false
     }
+
     override fun onClick(view: View?) {
         if (view == signUpBtn) {
+            nameTxt = name.text?.trim().toString()
+            phoneTxt = phoneNumber.text?.trim().toString()
+            emailTxt = email.text?.trim().toString()
+            passwordTxt = password.text?.trim().toString()
             viewModel.checkData(
-                name.text?.trim().toString(),
-                phoneNumber.text?.trim().toString(),
-                email.text?.trim().toString(),
-                password.text?.trim().toString(),
+                nameTxt,
+                phoneTxt,
+                emailTxt,
+                passwordTxt,
             )
         }
 

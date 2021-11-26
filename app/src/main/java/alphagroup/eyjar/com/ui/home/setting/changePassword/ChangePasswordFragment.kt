@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import alphagroup.eyjar.com.R
-import alphagroup.eyjar.com.utlis.showSnackBar
+import alphagroup.eyjar.com.commons.showSnackBar
 import alphagroup.eyjar.com.viewModel.ChangePasswordViewModel
 import android.app.ProgressDialog
 import android.graphics.PorterDuff
@@ -15,14 +15,16 @@ import android.os.Build
 import android.widget.ProgressBar
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.activity_main.*
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.change_password_fragment.*
 import kotlinx.android.synthetic.main.main_toolbar.view.*
 
+@AndroidEntryPoint
 class ChangePasswordFragment : Fragment(), View.OnClickListener {
     private lateinit var progressDialog: ProgressDialog
     private lateinit var viewModel: ChangePasswordViewModel
+    private lateinit var oldPasswordTxt: String
+    private lateinit var newPasswordTxt: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +43,7 @@ class ChangePasswordFragment : Fragment(), View.OnClickListener {
     private fun init() {
         viewModel = ViewModelProvider(this)[ChangePasswordViewModel::class.java]
 
-        toolbar.title.text =requireActivity().resources.getString(R.string.changePassword)
+        toolbar.title.text = requireActivity().resources.getString(R.string.changePassword)
         toolbar.backBtn.visibility = View.VISIBLE
 
         progressDialog = ProgressDialog(requireActivity())
@@ -75,7 +77,6 @@ class ChangePasswordFragment : Fragment(), View.OnClickListener {
                     newPasswordLin.error = resources.getString(R.string.invalidNewPhoneNumber)
                 }
                 "valid data" -> {
-
                     disableErrors()
                     viewModel.checkNetwork(requireActivity())
                 }
@@ -84,12 +85,21 @@ class ChangePasswordFragment : Fragment(), View.OnClickListener {
 
                 }
                 "isInternetPresent" -> {
-                    viewModel.sendRequest()
+                    progressDialog.show()
+                    disableErrors()
+                    viewModel.sendRequest(oldPasswordTxt, newPasswordTxt)
                 }
                 "validRequest" -> {
-                 requireActivity().onBackPressed()
+                    progressDialog.dismiss()
+                    requireActivity().onBackPressed()
 
                 }
+                "invalidRequest" -> {
+                    progressDialog.dismiss()
+                    this.showSnackBar(mainLin, R.string.errorChangePassword)
+                }
+
+
 
             }
         })
@@ -107,9 +117,12 @@ class ChangePasswordFragment : Fragment(), View.OnClickListener {
     override fun onClick(view: View?) {
 
         if (saveBtn == view) {
+            disableErrors()
+            oldPasswordTxt = oldPassword.text?.trim().toString()
+            newPasswordTxt = newPassword.text?.trim().toString()
             viewModel.checkData(
-                oldPassword.text?.trim().toString(),
-                newPassword.text?.trim().toString()
+                oldPasswordTxt,
+                newPasswordTxt
             )
 
         }

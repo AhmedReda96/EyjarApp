@@ -44,5 +44,29 @@
     <string name="newPassword">New password</string>
     <string name="invalidOldPhoneNumber">Invalid old password</string>
     <string name="invalidNewPhoneNumber">Invalid new password</string>
+    <string name="invalidPhoneOrEmail">phone or email already registered</string>
+    <string name="erorrIntoGetData">Error into get data, please try again</string>
+    <string name="retry">Retry</string>
+    <string name="brand">Brand</string>
+    <string name="title">Title</string>
+    <string name="model">Model</string>
+    <string name="gearType">Gear type</string>
+    <string name="year">Year</string>
+    <string name="payWay">Pay way</string>
+    <string name="enginePower">Engine power</string>
+    <string name="fuelType">Fuel type</string>
+    <string name="licencePlate">Licence plate</string>
+    <string name="color">Color</string>
+    <string name="ownerName">Owner name</string>
+    <string name="address">Address</string>
+    <string name="connectVia">Connect via</string>
+    <string name="call">Call</string>
+    <string name="whatsApp">Whats app</string>
+    <string name="cash">Cash</string>
+    <string name="price">Price</string>
+    <string name="no_whatsapp">"Whatsapp Not founded "</string>
+    <string name="noData">No data founded</string>
+    <string name="errorChangePassword">Error change password</string>
+    <string name="errorEditProfileData">Error edit profile data</string>
 
 </resources>

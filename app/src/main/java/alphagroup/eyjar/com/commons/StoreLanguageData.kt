@@ -1,4 +1,4 @@
-package alphagroup.eyjar.com.utlis
+package alphagroup.eyjar.com.commons
 
 import android.content.Context
 import android.content.SharedPreferences

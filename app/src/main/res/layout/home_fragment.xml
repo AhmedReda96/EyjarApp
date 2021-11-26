@@ -10,30 +10,32 @@
     <include layout="@layout/main_toolbar"
         android:id="@+id/toolbar"/>
 
+
+
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:layout_width="match_parent"
+    android:id="@+id/swipe"
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <ImageButton
-            android:scaleType="fitXY"
-            android:id="@+id/filterBtn"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_gravity="right"
-            android:layout_margin="@dimen/_10sdp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_filter" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/carsRV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/car_item_model" />
-
-
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
+        android:id="@+id/dataRV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/car_item_model" />
+    <include
+        android:id="@+id/networkLin"
+        layout="@layout/network_layout"
+        android:visibility="gone" />
     </LinearLayout>
+
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+
 
 </LinearLayout>

@@ -1,4 +1,4 @@
-package alphagroup.eyjar.com.utlis
+package alphagroup.eyjar.com.commons
 
 import android.app.Activity
 import android.content.Context
@@ -44,10 +44,7 @@ fun Activity.checkNetwork(): Boolean {
     val capabilities =
         connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
     if (capabilities != null) {
-        Log.d(
-            "TAG",
-            "testTag checkNetwork: true"
-        )
+
         when {
             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
                 Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
@@ -62,21 +59,13 @@ fun Activity.checkNetwork(): Boolean {
                 return true
             }
         }
-    } else {
-        Log.d(
-            "TAG",
-            "testTag checkNetwork: false"
-        )
     }
     return false
 }
 
 fun Fragment.showSnackBar(view:RelativeLayout, message: Int){
-
     val snack = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
     val sbView = snack.view
     sbView.setBackgroundColor(ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark));
     snack.show()
-
-
 }

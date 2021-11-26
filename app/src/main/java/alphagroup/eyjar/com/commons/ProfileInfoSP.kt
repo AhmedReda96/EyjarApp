@@ -1,15 +1,14 @@
-package alphagroup.eyjar.com.utlis
+package alphagroup.eyjar.com.commons
 
 import android.content.Context
 import android.content.SharedPreferences
 
-class ProfileInfo(context: Context) {
+class ProfileInfoSP(context: Context) {
     private var sharedPreferences: SharedPreferences? = null
-    private var name: String? = "ahmed"
-    private var email: String? = "ahmedaksdkadsn@ashdjh"
-    private var phone: String? = "01211212121112"
-    private var gender: String? = "male"
-
+    private var name: String? = null
+    private var email: String? =null
+    private var phone: String? = null
+    private var gender: String? =null
     private var id: String? = null
 
     init {

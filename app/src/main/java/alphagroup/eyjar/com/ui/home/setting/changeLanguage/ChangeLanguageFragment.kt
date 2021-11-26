@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import alphagroup.eyjar.com.R
-import alphagroup.eyjar.com.utlis.StoreLanguageData
+import alphagroup.eyjar.com.commons.StoreLanguageData
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_change_language.*
 import kotlinx.android.synthetic.main.main_toolbar.view.*

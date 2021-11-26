@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/mainLin"
     android:background="@color/mainColor"
     tools:context=".ui.login.signUp.SignUpFragment">
 
@@ -86,8 +87,8 @@
                         android:fontFamily="@font/cairo_semibold"
                         android:hint="@string/phoneNumber"
                         android:inputType="numberSigned"
-                        android:maxEms="11"
-                        android:maxLength="11"
+                        android:maxEms="10"
+                        android:maxLength="10"
                         android:maxLines="1"
                         android:singleLine="true"
                         android:textColor="@color/black"
@@ -211,7 +212,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_20sdp"
                         android:layout_marginEnd="@dimen/_20sdp"
-                        android:checked="true"
                         android:text="@string/female"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/_14sdp" />

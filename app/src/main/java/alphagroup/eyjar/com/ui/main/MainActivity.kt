@@ -1,20 +1,19 @@
 package alphagroup.eyjar.com.ui.main
 
 import alphagroup.eyjar.com.R
-import alphagroup.eyjar.com.utlis.changeLanguage
+import alphagroup.eyjar.com.commons.changeLanguage
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
 import kotlinx.android.synthetic.main.activity_main.*
 
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +27,12 @@ class MainActivity : AppCompatActivity() {
             navController
         )
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
+
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            Log.d(
+                "TAG",
+                "testTag getFragment: ${destination.label}"
+            )
             when (destination.id) {
                 R.id.homeFragment, R.id.searchFragment, R.id.profileFragment, R.id.settingFragment -> {
                     bottomNavigation.visibility = View.VISIBLE
